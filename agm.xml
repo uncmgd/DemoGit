@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinkConfig version="0.50">
+    <name>agm</name>
+    <description/>
+    <EmailSettings>
+        <address/>
+        <options sendOnPassedWithErrors="False"/>
+    </EmailSettings>
+    <Endpoint ordinal="1">
+        <type>HP-ALM</type>
+        <epName>HP-ALM</epName>
+        <entityName>Defect</entityName>
+        <entityType>DEFECT</entityType>
+        <ConnectionData>
+            <username>saas_jsidhu</username>
+            <password encryptInitString="kDwdXusCNPKeyy+Jho8D7w=="
+                encrypted="true" value="NDxkA2X8M5txiMrLcEwjLg=="/>
+            <Properties>
+                <property name="Domain" value="DEFAULT_jsidhu"/>
+                <property name="Project" value="Demo"/>
+                <property name="ServerURL" value="https://almastdemo.saas.hp.com/qcbin"/>
+            </Properties>
+        </ConnectionData>
+        <Filters/>
+        <Params/>
+    </Endpoint>
+    <Endpoint ordinal="2">
+        <type>HP-Agile-Manager</type>
+        <epName>HP-Agile-Manager</epName>
+        <entityName>Defect</entityName>
+        <entityType>DEFECT</entityType>
+        <ConnectionData>
+            <username>jaspreet.sidhu@hp.com</username>
+            <password encryptInitString="kDwdXusCNPKeyy+Jho8D7w=="
+                encrypted="true" value="fK51ZT0jVSAKH2+JlsOHGw=="/>
+            <Properties>
+                <property name="Domain" value="t334616161_hp_com"/>
+                <property name="Project" value="Jas_main"/>
+                <property name="ServerURL" value="https://agilemanager-ast.saas.hp.com/agm"/>
+                <property name="TenantId" value="334616161"/>
+            </Properties>
+        </ConnectionData>
+        <Filters/>
+        <Params/>
+    </Endpoint>
+    <isAutoMode>false</isAutoMode>
+    <Schedule>
+        <Synchronization enabled="false">
+            <FrequentTask frequency="30" units="Minutes"/>
+        </Synchronization>
+        <ConsistencyCheck enabled="false">
+            <TimedTask timeOfDay="23:00"/>
+        </ConsistencyCheck>
+    </Schedule>
+    <SubLinks>
+        <SubLink SubType1="NO_SUBTYPE" SubType2="NO_SUBTYPE">
+            <Event create="true" delete="DELETE_ON_OTHER" ordinal="1" update="true"/>
+            <Event create="true" delete="DELETE_ON_OTHER" ordinal="2" update="true"/>
+            <Field-Mapping>
+                <Fields>
+                    <Field direction="BiDirectional"
+                        dominantSide="endPoint1" endPoint1="BG_SEVERITY" endPoint2="severity">
+                        <ValuesFrom1To2>
+                            <valuePair dest="4-Low" src="1-Low"/>
+                            <valuePair dest="3-Medium" src="2-Medium"/>
+                            <valuePair dest="2-High" src="3-High"/>
+                            <valuePair dest="1-Critical" src="4-Very High"/>
+                        </ValuesFrom1To2>
+                        <ValuesFrom2To1>
+                            <valuePair dest="1-Low" src="4-Low"/>
+                            <valuePair dest="2-Medium" src="3-Medium"/>
+                            <valuePair dest="3-High" src="2-High"/>
+                            <valuePair dest="4-Very High" src="1-Critical"/>
+                        </ValuesFrom2To1>
+                    </Field>
+                    <Field direction="BiDirectional"
+                        dominantSide="endPoint1" endPoint1="BG_SUMMARY" endPoint2="name"/>
+                    <Field direction="BiDirectional"
+                        dominantSide="endPoint1"
+                        endPoint1="BG_DETECTION_DATE" endPoint2="creation-time"/>
+                    <Field direction="BiDirectional"
+                        dominantSide="endPoint1" endPoint1="BG_STATUS" endPoint2="status">
+                        <ValuesFrom1To2>
+                            <valuePair dest="Fixed" src="Fixed"/>
+                            <valuePair dest="New" src="New"/>
+                            <valuePair dest="Open" src="Open"/>
+                            <valuePair dest="Closed" src="Closed"/>
+                            <valuePair dest="Propose Close" src="Reopen"/>
+                            <valuePair dest="Closed" src="Rejected"/>
+                        </ValuesFrom1To2>
+                        <ValuesFrom2To1>
+                            <valuePair dest="Fixed" src="Fixed"/>
+                            <valuePair dest="New" src="New"/>
+                            <valuePair dest="Open" src="Open"/>
+                            <valuePair dest="Closed" src="Closed"/>
+                            <valuePair dest="Reopen" src="Propose Close"/>
+                        </ValuesFrom2To1>
+                    </Field>
+                    <ConstantValueField endPoint1="BG_USER_05" value="Defect"/>
+                    <ConstantValueField endPoint2="detected-by" value="jaspreet.sidhu@hp.com"/>
+                </Fields>
+            </Field-Mapping>
+        </SubLink>
+    </SubLinks>
+</LinkConfig>
